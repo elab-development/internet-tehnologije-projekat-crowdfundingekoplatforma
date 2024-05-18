@@ -76,9 +76,9 @@ class UserController extends Controller
         }
 
         $validatedData = $request->validate([
-            'username' => 'required|string|max:32',
-            'email' => 'required|string|email|max:64|unique:users,email,' . $user->id,
-            'password' => 'required|string|min:4',
+            'username' => 'sometimes|required|string|max:32',
+            'email' => 'sometimes|required|string|email|max:64|unique:users,email,' . $user->id,
+            'password' => 'sometimes|required|string|min:4',
         ]);
 
         if (isset($validatedData['username'])) {
