@@ -16,4 +16,9 @@ class City extends Model
         'latitude',
         'longitude',
     ];
+
+    public function projects()
+    {
+        return $this->hasMany(Project::class);
+    }
 }
