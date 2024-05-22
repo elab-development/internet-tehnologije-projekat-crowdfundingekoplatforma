@@ -84,4 +84,32 @@ class ProjectController extends Controller
 
         return response()->json(['message' => 'Project deleted successfully']);
     }
+
+    public function addUser(Request $request, $projectId)
+    {
+        $user = auth()->user();
+        $project = Project::findOrFail($projectId);
+
+        if ($project->users()->where('user_id', $user->id)->exists()) {
+            return response()->json(['message' => 'User already added to this project'], 409);
+        }
+
+        $project->users()->attach($user->id);
+
+        return response()->json(['message' => 'User added to project successfully'], 200);
+    }
+
+    public function removeUser(Request $request, $projectId)
+    {
+        $user = auth()->user();
+        $project = Project::findOrFail($projectId);
+
+        if (!$project->users()->where('user_id', $user->id)->exists()) {
+            return response()->json(['message' => 'User not part of this project'], 404);
+        }
+
+        $project->users()->detach($user->id);
+
+        return response()->json(['message' => 'User removed from project successfully'], 200);
+    }
 }

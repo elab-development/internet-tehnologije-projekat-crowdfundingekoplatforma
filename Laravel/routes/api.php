@@ -28,7 +28,7 @@ Route::post('login', [AuthController::class, 'login']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('logout', [AuthController::class, 'logout']);
-    
+
     Route::apiResource('users', UserController::class);
     Route::apiResource('cities', CityController::class);
 
@@ -38,4 +38,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('projects/{project}', [ProjectController::class, 'update'])->name('projects.update');
     Route::patch('projects/{project}', [ProjectController::class, 'update'])->name('projects.update');
     Route::delete('projects/{project}', [ProjectController::class, 'destroy'])->name('projects.destroy');
+
+    Route::post('/projects/{project}/add-user', [ProjectController::class, 'addUser']);
+    Route::delete('/projects/{project}/remove-user', [ProjectController::class, 'removeUser']);
+
 });
