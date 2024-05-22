@@ -28,7 +28,14 @@ Route::post('login', [AuthController::class, 'login']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('logout', [AuthController::class, 'logout']);
+    
     Route::apiResource('users', UserController::class);
     Route::apiResource('cities', CityController::class);
-    Route::apiResource('projects', ProjectController::class);
+
+    Route::get('projects', [ProjectController::class, 'index'])->name('projects.index');
+    Route::get('projects/{project}', [ProjectController::class, 'show'])->name('projects.show');
+    Route::post('projects', [ProjectController::class, 'store'])->name('projects.store');
+    Route::put('projects/{project}', [ProjectController::class, 'update'])->name('projects.update');
+    Route::patch('projects/{project}', [ProjectController::class, 'update'])->name('projects.update');
+    Route::delete('projects/{project}', [ProjectController::class, 'destroy'])->name('projects.destroy');
 });
