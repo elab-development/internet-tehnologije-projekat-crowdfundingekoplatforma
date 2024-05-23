@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Project;
 use Illuminate\Http\Request;
 
@@ -102,6 +103,34 @@ class ProjectController extends Controller
     public function removeUser(Request $request, $projectId)
     {
         $user = auth()->user();
+        $project = Project::findOrFail($projectId);
+
+        if (!$project->users()->where('user_id', $user->id)->exists()) {
+            return response()->json(['message' => 'User not part of this project'], 404);
+        }
+
+        $project->users()->detach($user->id);
+
+        return response()->json(['message' => 'User removed from project successfully'], 200);
+    }
+
+    public function addOtherUser(Request $request, $projectId, $userId)
+    {
+        $user = User::findOrFail($userId);
+        $project = Project::findOrFail($projectId);
+
+        if ($project->users()->where('user_id', $user->id)->exists()) {
+            return response()->json(['message' => 'User already added to this project'], 409);
+        }
+
+        $project->users()->attach($user->id);
+
+        return response()->json(['message' => 'User added to project successfully'], 200);
+    }
+
+    public function removeOtherUser(Request $request, $projectId, $userId)
+    {
+        $user = User::findOrFail($userId);
         $project = Project::findOrFail($projectId);
 
         if (!$project->users()->where('user_id', $user->id)->exists()) {

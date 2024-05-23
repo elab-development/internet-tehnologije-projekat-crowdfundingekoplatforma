@@ -21,6 +21,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'is_admin',
     ];
 
     /**
@@ -46,5 +47,10 @@ class User extends Authenticatable
     public function projects()
     {
         return $this->belongsToMany(Project::class, 'project_user');
+    }
+
+    public function isAdmin()
+    {
+        return $this->is_admin;
     }
 }

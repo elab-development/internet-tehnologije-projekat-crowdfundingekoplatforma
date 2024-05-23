@@ -33,12 +33,14 @@ class UserController extends Controller
             'name' => 'required|string|max:32',
             'email' => 'required|string|email|max:64|unique:users',
             'password' => 'required|string|min:4',
+            'is_admin' => 'required|boolean',
         ]);
 
         $user = User::create([
             'name' => $validatedData['name'],
             'email' => $validatedData['email'],
             'password' => bcrypt($validatedData['password']),
+            'is_admin' => $validatedData['is_admin'],
         ]);
 
         return response()->json($user, 201);
@@ -67,7 +69,7 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request, int $id)
     {
         $user = User::find($id);
 
@@ -79,6 +81,7 @@ class UserController extends Controller
             'name' => 'sometimes|required|string|max:32',
             'email' => 'sometimes|required|string|email|max:64|unique:users,email,' . $user->id,
             'password' => 'sometimes|required|string|min:4',
+            'is_admin' => 'sometimes|required|boolean',
         ]);
 
         if (isset($validatedData['name'])) {
@@ -89,6 +92,9 @@ class UserController extends Controller
         }
         if (isset($validatedData['password'])) {
             $user->password = bcrypt($validatedData['password']);
+        }
+        if (isset($validatedData['is_admin'])) {
+            $user->is_admin = $validatedData['is_admin'];
         }
 
         $user->save();

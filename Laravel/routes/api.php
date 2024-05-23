@@ -39,7 +39,12 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::patch('projects/{project}', [ProjectController::class, 'update'])->name('projects.update');
     Route::delete('projects/{project}', [ProjectController::class, 'destroy'])->name('projects.destroy');
 
-    Route::post('/projects/{project}/add-user', [ProjectController::class, 'addUser']);
-    Route::delete('/projects/{project}/remove-user', [ProjectController::class, 'removeUser']);
+    Route::post('projects/{project}/add-user', [ProjectController::class, 'addUser']);
+    Route::delete('projects/{project}/remove-user', [ProjectController::class, 'removeUser']);
+
+    Route::middleware('admin')->group(function() {
+        Route::post('projects/{project}/add-user/{user}', [ProjectController::class, 'addOtherUser']);
+        Route::post('projects/{project}/remove-user/{user}', [ProjectController::class, 'removeOtherUser']);
+    });
 
 });
