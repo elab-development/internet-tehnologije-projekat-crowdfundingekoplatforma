@@ -34,17 +34,18 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::get('projects', [ProjectController::class, 'index'])->name('projects.index');
     Route::get('projects/{project}', [ProjectController::class, 'show'])->name('projects.show');
-    Route::post('projects', [ProjectController::class, 'store'])->name('projects.store');
-    Route::put('projects/{project}', [ProjectController::class, 'update'])->name('projects.update');
-    Route::patch('projects/{project}', [ProjectController::class, 'update'])->name('projects.update');
-    Route::delete('projects/{project}', [ProjectController::class, 'destroy'])->name('projects.destroy');
-
+    
     Route::post('projects/{project}/add-user', [ProjectController::class, 'addUser']);
     Route::delete('projects/{project}/remove-user', [ProjectController::class, 'removeUser']);
-
+    
     Route::middleware('admin')->group(function() {
+        Route::post('projects', [ProjectController::class, 'store'])->name('projects.store');
+        Route::put('projects/{project}', [ProjectController::class, 'update'])->name('projects.update');
+        Route::patch('projects/{project}', [ProjectController::class, 'update'])->name('projects.update');
+        Route::delete('projects/{project}', [ProjectController::class, 'destroy'])->name('projects.destroy');
+
         Route::post('projects/{project}/add-user/{user}', [ProjectController::class, 'addOtherUser']);
-        Route::post('projects/{project}/remove-user/{user}', [ProjectController::class, 'removeOtherUser']);
+        Route::delete('projects/{project}/remove-user/{user}', [ProjectController::class, 'removeOtherUser']);
     });
 
 });
