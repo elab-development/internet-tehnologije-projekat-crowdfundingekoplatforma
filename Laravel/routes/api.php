@@ -29,9 +29,9 @@ Route::post('login', [AuthController::class, 'login']);
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('logout', [AuthController::class, 'logout']);
 
-    Route::apiResource('users', UserController::class);
-    Route::apiResource('cities', CityController::class);
-
+    Route::get('cities', [CityController::class, 'index'])->name('cities.index');
+    Route::get('cities/{city}', [CityController::class, 'show'])->name('cities.show');
+    
     Route::get('projects', [ProjectController::class, 'index'])->name('projects.index');
     Route::get('projects/{project}', [ProjectController::class, 'show'])->name('projects.show');
     
@@ -39,6 +39,13 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('projects/{project}/remove-user', [ProjectController::class, 'removeUser']);
     
     Route::middleware('admin')->group(function() {
+        Route::apiResource('users', UserController::class);
+
+        Route::post('cities', [CityController::class, 'store'])->name('cities.store');
+        Route::put('cities/{city}', [CityController::class, 'update'])->name('cities.update');
+        Route::patch('cities/{city}', [CityController::class, 'update'])->name('cities.update');
+        Route::delete('cities/{city}', [CityController::class, 'destroy'])->name('cities.destroy');
+
         Route::post('projects', [ProjectController::class, 'store'])->name('projects.store');
         Route::put('projects/{project}', [ProjectController::class, 'update'])->name('projects.update');
         Route::patch('projects/{project}', [ProjectController::class, 'update'])->name('projects.update');
