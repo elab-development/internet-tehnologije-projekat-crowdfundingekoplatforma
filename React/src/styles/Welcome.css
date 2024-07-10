@@ -1,0 +1,67 @@
+.welcome-container {
+    display: grid;
+    place-items: center;
+    grid-template-areas: "inner-div";
+    position: relative;
+
+    .inner {
+        grid-area: inner-div;
+    }
+
+    .background-container {
+        background-image: url('../assets/back2.jpeg');
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+        min-height: 100vh;
+        min-width: 100vw;
+    }
+
+    .tint-overlay {
+        height: 100%;
+        width: 100%;
+        background-color: rgba(0, 0, 0, 0.35);
+    }
+
+    .welcome-content {
+        background-color: rgba(0, 0, 0, 0.5);
+        padding: 2rem;
+        border-radius: 10px;
+    }
+
+    h1 {
+        font-size: 4rem;
+        color: white;
+        margin-bottom: 1rem;
+    }
+
+    p {
+        font-size: 1.5rem;
+        color: white;
+        margin-bottom: 2rem;
+    }
+
+    .welcome-buttons {
+        display: flex;
+        gap: 1rem;
+        width: 50%;
+        margin: auto;
+        justify-content: space-around;
+
+        a {
+            text-decoration: none;
+        }
+    }
+
+    button {
+        background-color: forestgreen;
+        color: white;
+        border: none;
+        width: 100px;
+        border-radius: 5px;
+        padding: 10px 20px;
+        cursor: pointer;
+        text-align: center;
+        transition: background-color 0.3s ease;
+    }
+}
