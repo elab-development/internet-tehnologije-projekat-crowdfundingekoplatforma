@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Project;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ProjectController extends Controller
 {
@@ -34,6 +35,7 @@ class ProjectController extends Controller
         ]);
 
         $project = Project::create($validated);
+        $project->load('city');
 
         return response()->json($project, 201);
     }
@@ -84,6 +86,12 @@ class ProjectController extends Controller
         $project->delete();
 
         return response()->json(['message' => 'Project deleted successfully']);
+    }
+
+    public function usersProjects() {
+        $user = Auth::user();
+        $projects = $user->projects()->with(['city', 'users'])->get();
+        return response()->json($projects, 200);
     }
 
     public function addUser(Request $request, $projectId)

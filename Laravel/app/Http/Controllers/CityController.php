@@ -87,7 +87,7 @@ class CityController extends Controller
             $city->region = $validatedData['region'];
         }
         if (isset($validatedData['country'])) {
-            $city->country = bcrypt($validatedData['country']);
+            $city->country = $validatedData['country'];
         }
         if (isset($validatedData['latitude'])) {
             $city->latitude = $validatedData['latitude'];

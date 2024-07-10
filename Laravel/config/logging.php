@@ -52,6 +52,13 @@ return [
     */
 
     'channels' => [
+
+        'console' => [
+            'driver' => 'single',
+            'path' => 'php://stdout',
+            'level' => 'debug',
+        ],
+
         'stack' => [
             'driver' => 'stack',
             'channels' => ['single'],
