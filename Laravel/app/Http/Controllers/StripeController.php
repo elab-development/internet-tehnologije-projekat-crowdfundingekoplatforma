@@ -14,22 +14,6 @@ use Stripe\PaymentMethod;
 
 class StripeController extends Controller
 {
-    public function attachPaymentMethod(Request $request)
-    {
-        $user = User::find($request->user_id);
-
-        if (!$user) {
-            return response()->json(['error' => 'User not found.'], 404);
-        }
-
-        Stripe::setApiKey(env('STRIPE_SECRET'));
-
-        $paymentMethod = PaymentMethod::retrieve($request->payment_method_id);
-        $paymentMethod->attach(['customer' => $user->stripe_id]);
-
-        return response()->json(['payment_method' => $paymentMethod]);
-    }
-
     public function createSubscription(Request $request)
     {
         $user = Auth::user();
@@ -104,7 +88,7 @@ class StripeController extends Controller
         }
 
         $activeSubscription = array_filter($subscriptions->data, function($subscription) {
-            Log::channel('console')->info('sub: '.$subscription);
+            //Log::channel('console')->info('sub: '.$subscription);
             return $subscription->status === 'active';
         });
 
