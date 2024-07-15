@@ -13,15 +13,15 @@ const Cities = () => {
     const [cities, setCities] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    const getCityImage = (id) => {
-        switch (id) {
-            case 1:
+    const getCityImage = (city) => {
+        switch (city.name) {
+            case "Beograd":
                 return City1;
-            case 2:
+            case "Paraćin":
                 return City2;
-            case 3:
+            case "Niš":
                 return City3;
-            case 4:
+            case "Novi Sad":
                 return City4;
 
             default:
@@ -82,7 +82,7 @@ const Cities = () => {
                 <div className="cities-list">
                     {cities.map(city => (
                         <div key={city.id} className="city-card">
-                            <img className="city-image" src={getCityImage(city.id)} alt={city.name} />
+                            <img className="city-image" src={getCityImage(city)} alt={city.name} />
                             <div className="city-details">
                                 <h3>{city.name}</h3>
                                 <p>{city.region}</p>
